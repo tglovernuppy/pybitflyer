@@ -5,7 +5,10 @@ import requests
 import time
 import hmac
 import hashlib
-import urllib
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 from .exception import AuthException
 
 
@@ -26,7 +29,7 @@ class API(object):
             body = json.dumps(params)
         else:
             if params:
-                body = "?" + urllib.parse.urlencode(params)
+                body = "?" + urlencode(params)
 
         if self.api_key and self.api_secret:
             access_timestamp = str(time.time())
